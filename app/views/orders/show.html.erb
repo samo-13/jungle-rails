@@ -3,27 +3,23 @@
   <header class="page-header">
     <h1>Order #<%= @order.id %></h1>
   </header>
-
+  <h4>Thank you for your order, <%= @order.email %>!</h4>
   <div class="order-summary jumbotron">
-    <h4>Thank you for your order, <%= @order.email %>!</h4>
+    <table class-"table table-bordered"
+    <thead>
+    <tr>
+      <th colspan="2">Product</th>
+      <th>Description</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
     <p>
     <%= @order.line_items.each do |item| %>
-      <%= render 'orders', product: item.product, quantity: item.quantity %>
+      <%= render 'orders', product: item.product, quantity: item[:quantity].to_i %>
       <% end %>
     </p>
-    
-    <table>
-      <tr>
-        <td>
-
-      </td>
-        <td>Cell B</td>
-      </tr>
-      <tr>
-        <td>Cell C</td>
-        <td>Cell D</td>
-      </tr>
-    </table>
 
   </div>
 
