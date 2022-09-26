@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show]
   resources :categories, only: [:show]
+  resources :about, only: [:index] 
+  # https://stackoverflow.com/questions/46114272/when-does-rails-looks-for-index-method-and-when-for-show-method-in-controller#:~:text=Both%20index%20and%20show%20are,id%20param%20in%20the%20url.
 
   resource :cart, only: [:show] do
     post   :add_item
