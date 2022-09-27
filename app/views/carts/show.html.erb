@@ -1,3 +1,15 @@
+
+<% if enhanced_cart.length < 1 %>
+  <div style="display: flex; flex-direction: column; align-items: center">
+  <header class="page-header">
+    <h1>My Cart</h1>
+  </header>
+  <a href="#">
+  <div>
+     Click to go back to shop!
+  </div>
+  </a>
+  <% else %>
 <section class="cart-show">
 
   <header class="page-header">
@@ -50,3 +62,4 @@
   </div>
 
 </section>
+<% end %>
