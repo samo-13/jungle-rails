@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
   
     # Sends someone to the login page if they aren't logged in
     # Used to keep specific site pages secure
-    def authorize
-      redirect_to '/login' unless current_user
-    end
+    # def authorize
+    #   redirect_to '/login' unless current_user
+    # end
 
   private
 

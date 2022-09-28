@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       redirect_to '/', notice: "You are logged in."
     else
       flash.now.alert = "Oops, your email or password is invalid"
-      render "new"
+      redirect to '/login'
     end
   end
 

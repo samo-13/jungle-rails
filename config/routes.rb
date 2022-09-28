@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
 
-  get 'sessions/new'
-  get 'signup', to: 'users#new', as: 'signup'
-  get 'login', to: 'sessions#new', as: 'login'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
+  # get 'sessions/new'
+  # get 'signup', to: 'users#new', as: 'signup'
+  # get 'login', to: 'sessions#new', as: 'login'
+  # get 'logout', to: 'sessions#destroy', as: 'logout'
 
-  resources :users
+  # resources :users
   resources :sessions
 
   root to: 'products#index'
@@ -29,6 +29,11 @@ Rails.application.routes.draw do
 
     # These routes will be for signup. The first renders a form in the browse, the second will 
     # receive the form and create a user in our database using the data given to us by the user.
+
+    get '/login' => 'sessions#new'
+    post '/login' => 'sessions#create'
+    get '/logout' => 'sessions#destroy'
+  
     get '/signup' => 'users#new'
     post '/users' => 'users#create'
 
