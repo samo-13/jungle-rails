@@ -1,5 +1,8 @@
 class OrdersController < ApplicationController
 
+  # Keep orders page secure (user has to log in to see)
+  # before_filter :authorize
+
   def show
     @order = Order.find(params[:id])
   end
