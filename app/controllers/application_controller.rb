@@ -4,11 +4,38 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery with: :exception
 
+  private
+
+  def cart
+    @cart ||= cookies[:cart].present? ? JSON.parse(cookies[:cart]) : {}
+  end
+
+  helper_method :cart
+
+  def enhanced_cart
+    @enhanced_cart ||= Product.where(id: cart.keys).map {|product| { product:product, quantity: cart[product.id.to_s] } }
+  end
+
+  helper_method :enhanced_cart
+
+  def cart_subtotal_cents
+    enhanced_cart.map {|entry| entry[:product].price_cents * entry[:quantity]}.sum
+  end
+
+  helper_method :cart_subtotal_cents
+
+  def update_cart(new_cart)
+    cookies[:cart] = {
+      value: JSON.generate(new_cart),
+      expires: 10.days.from_now
+    }
+    cookies[:cart]
+  end
+
   # Methods to look up the user if they're logged in
   def current_user
     # Save their user object to a @current_user variable
-    @current_user || = User.find(session[:user_id]) 
-    if session[:user_id]
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   # Allows us to use @current_user in our view files
@@ -18,31 +45,5 @@ class ApplicationController < ActionController::Base
   # Used to keep specific site pages secure
   def authorize
     redirect_to '/login' unless current_user
-  end
-
-  private
-
-  def cart
-    @cart ||= cookies[:cart].present? ? JSON.parse(cookies[:cart]) : {}
-  end
-  helper_method :cart
-
-  def enhanced_cart
-    @enhanced_cart ||= Product.where(id: cart.keys).map {|product| { product:product, quantity: cart[product.id.to_s] } }
-  end
-  helper_method :enhanced_cart
-
-  def cart_subtotal_cents
-    enhanced_cart.map {|entry| entry[:product].price_cents * entry[:quantity]}.sum
-  end
-  helper_method :cart_subtotal_cents
-
-
-  def update_cart(new_cart)
-    cookies[:cart] = {
-      value: JSON.generate(new_cart),
-      expires: 10.days.from_now
-    }
-    cookies[:cart]
   end
 end
